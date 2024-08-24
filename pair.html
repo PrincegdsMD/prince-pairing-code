@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>PRINCE</title>
+ <title>GURU</title>
  <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
  <style>
 body {
@@ -9,7 +9,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: skyblue;
+  background-image: skyblue;
   background-size: cover; 
   background-position: center; 
   font-family: 'Helvetica', sans-serif;
@@ -126,15 +126,15 @@ body {
 <body>
  <div class="container">
   <div class="header">
-   <h1>PRINCE BOT PAIRING</h1>
+   <h1>PRINCE MD PAIRING</h1>
   </div>
   <div class="main">
    <form>
     <span>
      <i class="fa fa-user"></i>
-     <input type="number" id="number" placeholder="type your number with country code" name="">
+     <input type="number" id="number" placeholder="enter your phone number with country code" name="">
     </span><br>
-     <button id="Enter">submit</button>
+     <button id="submit">submit</button>
 <main id="pair"></main>
    </form>
   </div>
@@ -203,14 +203,14 @@ body {
           c.type = "text";
           c.value = "+" + bb;
           c.style = "color:black;font-size:20px";
-          a.innerHTML = '<a style="color:black;font-weight:bold">Fetching wait...</a><br><br>';
+          a.innerHTML = '<a style="color:black;font-weight:bold">Please wait for some time</a><br><br>';
   
           try {
             let {
               data
             } = await axios(`/pair?phone=${bc}`);
             let code = data.code || "Service Unavailable";
-            a.innerHTML = '<font id="copy" onclick="Copy()" style="color:green;font-weight:bold" size="5"> CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+            a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
             isCodeDisplayed = true;
   
             setTimeout(() => {
