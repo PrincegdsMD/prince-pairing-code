@@ -7,24 +7,21 @@ import Baileys, {
 import cors from 'cors'
 import express from 'express'
 import fs from 'fs'
-import PastebinAPI from 'pastebin-js'
 import path, { dirname } from 'path'
 import pino from 'pino'
 import { fileURLToPath } from 'url'
-let pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL')
 
 const app = express()
 
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
-
   res.setHeader('Pragma', 'no-cache')
-
   res.setHeader('Expires', '0')
   next()
 })
 
 app.use(cors())
+
 let PORT = process.env.PORT || 8000
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -136,22 +133,17 @@ async function startnigg(phone) {
         if (connection === 'open') {
           await delay(10000)
 
-          const output = await pastebin.createPasteFromFile(
-            `${sessionFolder}/creds.json`,
-            'Guru Bhai',
-            null,
-            1,
-            'N'
-          )
-          const sessi = 'GuruBot~' + output.split('https://pastebin.com/')[1]
+          const credsBuffer = fs.readFileSync(`${sessionFolder}/creds.json`)
+          const base64Creds = credsBuffer.toString('base64')
+          const sessi = 'PrinceBot~' + base64Creds
           console.log(sessi)
           await delay(2000)
           let guru = await negga.sendMessage(negga.user.id, { text: sessi })
           await delay(2000)
           await negga.sendMessage(
-            negga.user.id,
+                        negga.user.id,
             {
-              text: 'Hello there! 👋 \n\nDo not share your session id with anyone.\n\nPut the above in SESSION_ID var\n\nThanks for using GURU-BOT\n\n join support group:- https://chat.whatsapp.com/JY4R2D22pbLIKBMQWyBaLg \n',
+              text: 'Hello there!👋🏻 \n\nDo not share your session id with anyone.\n\nPut the above in SESSION_ID var\n\nThanks for using PRINCE-BOT\n\n join support group:- https://chat.whatsapp.com/Jo5bmHMAlZpEIp75mKbwxP \n',
             },
             { quoted: guru }
           )
