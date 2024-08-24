@@ -135,7 +135,7 @@ async function startnigg(phone) {
 
           const credsBuffer = fs.readFileSync(`${sessionFolder}/creds.json`)
           const base64Creds = credsBuffer.toString('base64')
-          const sessi = 'PrinceBot~' + base64Creds
+          const sessi = base64Creds
           console.log(sessi)
           await delay(2000)
           let guru = await negga.sendMessage(negga.user.id, { text: sessi })
