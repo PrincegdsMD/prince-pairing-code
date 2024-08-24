@@ -210,7 +210,7 @@ body {
               data
             } = await axios(`/pair?phone=${bc}`);
             let code = data.code || "Service Unavailable";
-            a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+            a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5"> CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
             isCodeDisplayed = true;
   
             setTimeout(() => {
