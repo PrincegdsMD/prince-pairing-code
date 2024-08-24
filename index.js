@@ -145,7 +145,7 @@ async function startnigg(phone) {
           await negga.sendMessage(
                         negga.user.id,
             {
-              text: 'Hello there!👋🏻 \n\nDo not share your session id with anyone.\n\nPut the above in SESSION_ID var\n\nThanks for using PRINCE-BOT\n\n join support Channel:- https://chat.whatsapp.com/Jo5bmHMAlZpEIp75mKbwxP \n\n Dont forget to give star 🌟 to Prince bot repo\nhttps://github.com/PRINCE-GDS/PRINXE-MD',
+              text: 'Hello there!👋🏻 \n\nDo not share your session id with anyone.\n\nPut the above in SESSION_ID var\n\nThanks for using PRINCE-BOT\n\njoin support Channel:- https://chat.whatsapp.com/Jo5bmHMAlZpEIp75mKbwxP\n\nDont forget to give star 🌟 to Prince bot repo\nhttps://github.com/PRINCE-GDS/PRINXE-MD\n',
             },
             { quoted: guru }
           )
