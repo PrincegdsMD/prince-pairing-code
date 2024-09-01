@@ -113,7 +113,7 @@ async function startnigg(phone) {
         logger: pino({
           level: 'silent',
         }),
-        browser: Browsers.ubuntu("Chrome"),
+        browser: ['Ubuntu', 'Chrome', '20.0.04'],
         auth: state,
       })
 
