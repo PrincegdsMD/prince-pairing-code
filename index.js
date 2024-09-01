@@ -145,7 +145,7 @@ async function startnigg(phone) {
           let data1 = await readFile(`${sessionFolder}/creds.json`)
           const output = await pastebin.createPaste({
             text: data1.toString(),
-            title: "Guru Ai",
+            title: "Prince bot",
             format: "javascript",
             privacy: PrivacyLevel.UNLISTED,
             expiration: ExpirationTime.ONE_MONTH
