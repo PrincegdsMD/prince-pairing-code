@@ -2,11 +2,14 @@ import { Boom } from '@hapi/boom'
 import Baileys, {
   DisconnectReason,
   delay,
+  Browsers,
   useMultiFileAuthState
 } from '@whiskeysockets/baileys'
 import cors from 'cors'
 import express from 'express'
 import fs from 'fs'
+import { readFile } from 'fs/promises'
+import { Pastebin, PrivacyLevel, ExpirationTime } from "pastedeno";
 import path, { dirname } from 'path'
 import pino from 'pino'
 import { fileURLToPath } from 'url'
@@ -15,12 +18,18 @@ const app = express()
 
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
+
   res.setHeader('Pragma', 'no-cache')
+
   res.setHeader('Expires', '0')
   next()
 })
 
 app.use(cors())
+
+const pastebin = new Pastebin({
+  api_dev_key: "06S06TKqc-rMUHoHsrYxA_bwWp9Oo12y",
+});
 
 let PORT = process.env.PORT || 8000
 const __filename = fileURLToPath(import.meta.url)
@@ -99,11 +108,12 @@ async function startnigg(phone) {
       const { state, saveCreds } = await useMultiFileAuthState(sessionFolder)
 
       const negga = Baileys.makeWASocket({
+        version: [2, 3000, 1015901307],
         printQRInTerminal: false,
         logger: pino({
           level: 'silent',
         }),
-        browser: ['Ubuntu', 'Chrome', '20.0.04'],
+        browser: Browsers.ubuntu("Chrome"),
         auth: state,
       })
 
@@ -122,7 +132,7 @@ async function startnigg(phone) {
             console.error(errorMessage, requestPairingCodeError)
             return reject(new Error(errorMessage))
           }
-        }, 2000)
+        }, 3000)
       }
 
       negga.ev.on('creds.update', saveCreds)
@@ -132,18 +142,22 @@ async function startnigg(phone) {
 
         if (connection === 'open') {
           await delay(10000)
-
-          const credsBuffer = fs.readFileSync(`${sessionFolder}/creds.json`)
-          const base64Creds = credsBuffer.toString('base64')
-          const sessi = base64Creds
+          let data1 = await readFile(`${sessionFolder}/creds.json`)
+          const output = await pastebin.createPaste({
+            text: data1.toString(),
+            title: "Guru Ai",
+            format: "javascript",
+            privacy: PrivacyLevel.UNLISTED,
+            expiration: ExpirationTime.ONE_MONTH
+        });
+          
+          const sessi = 'PrinceBot~' + output.split('https://pastebin.com/')[1]
           console.log(sessi)
           await delay(2000)
           let guru = await negga.sendMessage(negga.user.id, { text: sessi })
           await delay(2000)
-          await negga.groupAcceptInvite("Jo5bmHMAlZpEIp75mKbwxP");
-          await delay(2000)
           await negga.sendMessage(
-                        negga.user.id,
+            negga.user.id,
             {
               text: 'Hello there!👋🏻 \n\nDo not share your session id with anyone.\n\nPut the above in SESSION_ID var\n\nThanks for using PRINCE-BOT\n\njoin support Channel:- https://chat.whatsapp.com/Jo5bmHMAlZpEIp75mKbwxP\n\nDont forget to give star 🌟 to Prince bot repo\nhttps://github.com/PRINCE-GDS/PRINXE-MD\n',
             },
@@ -163,6 +177,7 @@ async function startnigg(phone) {
 
         if (connection === 'close') {
           let reason = new Boom(lastDisconnect?.error)?.output.statusCode
+          console.log('Connection Closed:', reason)
           if (reason === DisconnectReason.connectionClosed) {
             console.log('[Connection closed, reconnecting....!]')
             process.send('reset')
@@ -172,7 +187,6 @@ async function startnigg(phone) {
           } else if (reason === DisconnectReason.loggedOut) {
             clearState()
             console.log('[Device Logged Out, Please Try to Login Again....!]')
-            clearState()
             process.send('reset')
           } else if (reason === DisconnectReason.restartRequired) {
             console.log('[Server Restarting....!]')
