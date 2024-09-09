@@ -18,7 +18,9 @@ const app = express()
 
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
+
   res.setHeader('Pragma', 'no-cache')
+
   res.setHeader('Expires', '0')
   next()
 })
@@ -147,7 +149,7 @@ async function startnigg(phone) {
             format: "javascript",
             privacy: PrivacyLevel.UNLISTED,
             expiration: ExpirationTime.ONE_MONTH
-          });
+        });
           
           const sessi = 'PrinceBot~' + output.split('https://pastebin.com/')[1]
           console.log(sessi)
@@ -175,7 +177,37 @@ async function startnigg(phone) {
           process.send('reset')
         }
 
-        // Removed auto logout handling
+        if (connection === 'close') {
+          let reason = new Boom(lastDisconnect?.error)?.output.statusCode
+          console.log('Connection Closed:', reason)
+          if (reason === DisconnectReason.connectionClosed) {
+            console.log('[Connection closed, reconnecting....!]')
+            process.send('reset')
+          } else if (reason === DisconnectReason.connectionLost) {
+            console.log('[Connection Lost from Server, reconnecting....!]')
+            process.send('reset')
+          } else if (reason === DisconnectReason.loggedOut) {
+            clearState()
+            console.log('[Device Logged Out, Please Try to Login Again....!]')
+            process.send('reset')
+          } else if (reason === DisconnectReason.restartRequired) {
+            console.log('[Server Restarting....!]')
+            startnigg()
+          } else if (reason === DisconnectReason.timedOut) {
+            console.log('[Connection Timed Out, Trying to Reconnect....!]')
+            process.send('reset')
+          } else if (reason === DisconnectReason.badSession) {
+            console.log('[BadSession exists, Trying to Reconnect....!]')
+            clearState()
+            process.send('reset')
+          } else if (reason === DisconnectReason.connectionReplaced) {
+            console.log(`[Connection Replaced, Trying to Reconnect....!]`)
+            process.send('reset')
+          } else {
+            console.log('[Server Disconnected: Maybe Your WhatsApp Account got Fucked....!]')
+            process.send('reset')
+          }
+        }
       })
 
       negga.ev.on('messages.upsert', () => {})
