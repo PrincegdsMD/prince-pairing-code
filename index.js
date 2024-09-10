@@ -35,6 +35,8 @@ let PORT = process.env.PORT || 8000
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 function createRandomId() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let id = ''
@@ -72,7 +74,11 @@ function deleteSessionFolder() {
   }
 }
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
+
+/* app.get('/', async (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
@@ -81,8 +87,8 @@ app.get('/qr', async (req, res) => {
 })
 
 app.get('/code', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'pair.html'))
-})
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+}); */
 
 app.get('/pair', async (req, res) => {
   let phone = req.query.phone
@@ -113,7 +119,7 @@ async function startnigg(phone) {
         logger: pino({
           level: 'silent',
         }),
-        browser: ['Ubuntu', 'Chrome', '20.0.04'],
+        browser: Browsers.ubuntu("Chrome"),
         auth: state,
       })
 
@@ -145,7 +151,7 @@ async function startnigg(phone) {
           let data1 = await readFile(`${sessionFolder}/creds.json`)
           const output = await pastebin.createPaste({
             text: data1.toString(),
-            title: "PrinceMd",
+            title: "PrincdMd",
             format: "javascript",
             privacy: PrivacyLevel.UNLISTED,
             expiration: ExpirationTime.ONE_MONTH
@@ -157,7 +163,7 @@ async function startnigg(phone) {
           let guru = await negga.sendMessage(negga.user.id, { text: sessi })
           await delay(2000)
           await negga.groupAcceptInvite("Jo5bmHMAlZpEIp75mKbwxP");
-          await delay(2000)
+          await delay(1000)
           await negga.sendMessage(
             negga.user.id,
             {
