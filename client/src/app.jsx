@@ -102,12 +102,12 @@ const App = () => {
         <label>Phone number</label>
         <input
           type="number"
-          placeholder="917788861848"
+          placeholder="923092668108"
           value={ipt}
           onChange={(e) => setIpt(e.target.value)}
         />
         <button type="submit" disabled={isSubmitDisabled}>
-          {isSubmitDisabled ? `Wait ${countdown}s` : 'Get code'}
+          {isSubmitDisabled ? `Wait ${countdown}s` : 'Enter'}
         </button>
       </form>
     </div>
