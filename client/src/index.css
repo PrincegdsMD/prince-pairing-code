@@ -1,5 +1,5 @@
 body {
-  background-image: skyblue; 
+  background-image: url('akeno.jpg'); 
   background-size: cover; 
   background-position: center;
   background-repeat: no-repeat;
@@ -18,13 +18,12 @@ body {
 
 @media (max-width: 1024px) {
   body {
-    background-color: green;
+    background-image: url('akeno.jpg');
   }
 }
 
 @media (max-width: 768px) {
   body {
-    background-color: skyblue;
+    background-image: url('guts.png');
   }
 }
-
