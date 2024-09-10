@@ -18,13 +18,13 @@ body {
 
 @media (max-width: 1024px) {
   body {
-    background-image: green;
+    background-color: green;
   }
 }
 
 @media (max-width: 768px) {
   body {
-    background-image: skyblue;
+    background-color: skyblue;
   }
 }
 
