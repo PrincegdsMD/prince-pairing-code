@@ -1,20 +1,19 @@
 {
-    "name": "express-pair",
+    "name": "prince-pair",
     "version": "1.0.0",
     "description": "",
     "main": "guru.js",
     "type": "module",
-    
     "engines": {
-        "node": ">=20.0.0"
+        "node": "20.16.0"
     },
-    
     "scripts": {
         "start": "node guru.js",
+        "build": "cd client && npm run build",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
-    "author": "sksweeto",
+    "author": "sweetoGD",
     "license": "",
     "dependencies": {
         "@hapi/boom": "^10.0.1",
@@ -31,6 +30,15 @@
         "pino": "^8.15.1",
         "prompt-sync": "^4.2.0",
         "readline": "^1.3.0",
-        "yargs": "^17.6.0"
-    }
+        "yargs": "^17.6.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-router-dom": "^6.22.3",
+        "react-scripts": "5.0.1",
+        "socket.io-client": "^4.7.5",
+        "react-icons": "5.2.1"
+    },
+    "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "7.24.7"
+  }
 }
